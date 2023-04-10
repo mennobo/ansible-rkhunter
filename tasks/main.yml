@@ -46,3 +46,24 @@
     - update
     - rkhunter
     - rkhunter-update
+
+- name: Transfer rkhunter_log_scanner.sh
+  copy: src=rkhunter_log_scanner.sh dest=/usr/share/rkhunter_log_scanner.sh mode=077
+
+- name: Transfer rkhunter_log_scanner.py
+  copy: src=rkhunter_log_scanner.py dest=/usr/share/rkhunter_log_scanner.py mode=077
+
+- name: Transfer rkhunter_whitelister.sh
+  copy: src=rkhunter_whitelister.sh dest=/usr/share/rkhunter_whitelister.sh mode=077
+
+- name: Transfer rkhunter_whitelister.py
+  copy: src=rkhunter_whitelister.py dest=/usr/share/rkhunter_whitelister.py mode=077
+
+- name: Run whitelister script
+  script: /usr/share/rkhunter_whitelister.sh
+
+- name: Ensure a scanner that runs every 30 minutes
+  ansible.builtin.cron:
+    name: "run rkhunter"
+    minute: "0,30"
+    job: "/usr/share/log_scanner.sh"

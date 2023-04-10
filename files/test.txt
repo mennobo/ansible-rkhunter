@@ -1,0 +1,18 @@
+SCRIPTWHITELIST=/usr/sbin/adduser
+SCRIPTWHITELIST=/usr/bin/egrep
+SCRIPTWHITELIST=/usr/bin/fgrep
+SCRIPTWHITELIST=/usr/bin/ldd
+SCRIPTWHITELIST=/usr/bin/lwp-request
+SCRIPTWHITELIST=/usr/bin/which.debianutils
+SCRIPTWHITELIST= /etc/.java
+
+SCRIPTWHITELIST= /etc/.resolv.conf.systemd-resolved.bak
+SCRIPTWHITELIST=/usr/sbin/adduser
+SCRIPTWHITELIST=/usr/bin/egrep
+SCRIPTWHITELIST=/usr/bin/fgrep
+SCRIPTWHITELIST=/usr/bin/ldd
+SCRIPTWHITELIST=/usr/bin/lwp-request
+SCRIPTWHITELIST=/usr/bin/which.debianutils
+SCRIPTWHITELIST= /etc/.java
+
+SCRIPTWHITELIST= /etc/.resolv.conf.systemd-resolved.bak
