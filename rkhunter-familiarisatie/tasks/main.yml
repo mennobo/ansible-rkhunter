@@ -1,0 +1,91 @@
+---  # tasks file for rkhunter
+
+- name: Install rkhunter
+  apt:
+    name: rkhunter
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+    state: present
+  tags:
+    - rkhunter
+    - rkhunter-install
+
+- name: Configure /etc/rkhunter.conf
+  template:
+    src: "etc/rkhunter.conf.j2"
+    dest: /etc/rkhunter.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: update rkhunter
+  tags:
+    - rkhunter
+    - rkhunter-configuration
+
+- name: Configure /etc/default/rkhunter
+  template:
+    src: etc/default/rkhunter.j2
+    dest: /etc/default/rkhunter
+    owner: root
+    group: root
+    mode: 0644
+  notify: update rkhunter
+  tags:
+    - rkhunter
+    - rkhunter-configuration
+
+- name: rkhunter update
+  command: rkhunter --update
+  register: rkhunter_update
+  failed_when: rkhunter_update.rc != 2 and rkhunter_update.rc != 0
+  changed_when: false
+  tags:
+    - rkhunter
+    - rkhunter-update
+
+- name: Transfer rkhunter_whitelister.sh
+  copy: src=rkhunter_whitelister.sh dest=/usr/share/rkhunter_whitelister.sh mode=077
+  tags:
+    - rkhunter
+    - rkhunter-configuration
+
+- name: Transfer rkhunter_whitelister.py
+  copy: src=rkhunter_whitelister.py dest=/usr/share/rkhunter_whitelister.py mode=077
+  tags:
+    - rkhunter
+    - rkhunter-configuration
+
+- name: Run whitelister script
+  script: /usr/share/rkhunter_whitelister.sh
+  tags:
+    - rkhunter
+    - rkhunter-whitelist
+
+- name: Transfer rkhunter_log_scanner.sh
+  copy: src=rkhunter_log_scanner.sh dest=/usr/share/rkhunter_log_scanner.sh mode=077
+  tags:
+    - rkhunter
+    - rkhunter-configuration
+
+- name: Transfer rkhunter_log_scanner.py
+  copy: src=rkhunter_log_scanner.py dest=/usr/share/rkhunter_log_scanner.py mode=077
+  tags:
+    - rkhunter
+    - rkhunter-configuration
+
+- name: Ensure a scanner that runs every 30 minutes
+  ansible.builtin.cron:
+    name: "run rkhunter"
+    minute: "0,30"
+    job: "/usr/share/rkhunter_log_scanner.sh"
+  tags:
+    - rkhunter
+    - rkhunter-cronjob
+
+- name: Fetch remote .dat file
+  ansible.builtin.fetch:
+    src: /var/lib/rkhunter/db/rkhunter.dat
+    dest: /tmp/rkhunter/rkhunter.dat-{{ inventory_hostname }}
+    flat: yes
+  tags:
+    - testing

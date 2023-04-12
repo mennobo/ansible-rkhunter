@@ -7,7 +7,6 @@
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
     state: present
   tags:
-    - install
     - rkhunter
     - rkhunter-install
 
@@ -20,7 +19,6 @@
     mode: 0644
   notify: update rkhunter
   tags:
-    - configuration
     - rkhunter
     - rkhunter-configuration
 
@@ -31,9 +29,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: update rkhunter
   tags:
-    - configuration
     - rkhunter
     - rkhunter-configuration
 
@@ -43,27 +39,32 @@
   failed_when: rkhunter_update.rc != 2 and rkhunter_update.rc != 0
   changed_when: false
   tags:
-    - update
     - rkhunter
     - rkhunter-update
 
+- name: Specifying a path directly
+  ansible.builtin.copy:
+    src: /tmp/rkhunter/rkhunter.dat-{{ inventory_hostname }}
+    dest: /var/lib/rkhunter/db/rkhunter.dat
+
 - name: Transfer rkhunter_log_scanner.sh
   copy: src=rkhunter_log_scanner.sh dest=/usr/share/rkhunter_log_scanner.sh mode=077
+  tags:
+    - rkhunter
+    - rkhunter-configuration
 
 - name: Transfer rkhunter_log_scanner.py
   copy: src=rkhunter_log_scanner.py dest=/usr/share/rkhunter_log_scanner.py mode=077
-
-- name: Transfer rkhunter_whitelister.sh
-  copy: src=rkhunter_whitelister.sh dest=/usr/share/rkhunter_whitelister.sh mode=077
-
-- name: Transfer rkhunter_whitelister.py
-  copy: src=rkhunter_whitelister.py dest=/usr/share/rkhunter_whitelister.py mode=077
-
-- name: Run whitelister script
-  script: /usr/share/rkhunter_whitelister.sh
+  tags:
+    - rkhunter
+    - rkhunter-configuration
 
 - name: Ensure a scanner that runs every 30 minutes
   ansible.builtin.cron:
     name: "run rkhunter"
     minute: "0,30"
-    job: "/usr/share/log_scanner.sh"
+    job: "/usr/share/rkhunter_log_scanner.sh"
+  tags:
+    - rkhunter
+    - rkhunter-cronjob
+  # tags: [ never, debug ]
