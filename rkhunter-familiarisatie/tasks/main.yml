@@ -17,7 +17,6 @@
     owner: root
     group: root
     mode: 0644
-  notify: update rkhunter
   tags:
     - rkhunter
     - rkhunter-configuration
@@ -29,7 +28,6 @@
     owner: root
     group: root
     mode: 0644
-  notify: update rkhunter
   tags:
     - rkhunter
     - rkhunter-configuration
@@ -43,11 +41,16 @@
     - rkhunter
     - rkhunter-update
 
-- name: Transfer rkhunter_whitelister.sh
-  copy: src=rkhunter_whitelister.sh dest=/usr/share/rkhunter_whitelister.sh mode=077
-  tags:
-    - rkhunter
-    - rkhunter-configuration
+- name: Copy script files
+  copy:
+    src: '{{item}}'
+    dest: '/usr/share/rkhunter'
+    mode: 077
+  loop:
+    - rkhunter_whitelister.py
+    - rkhunter_whitelister.sh
+    - rkhunter_log_scanner.py
+    - rkhunter_log_scanner.sh
 
 - name: Transfer rkhunter_whitelister.py
   copy: src=rkhunter_whitelister.py dest=/usr/share/rkhunter_whitelister.py mode=077
@@ -55,14 +58,8 @@
     - rkhunter
     - rkhunter-configuration
 
-- name: Run whitelister script
-  script: /usr/share/rkhunter_whitelister.sh
-  tags:
-    - rkhunter
-    - rkhunter-whitelist
-
-- name: Transfer rkhunter_log_scanner.sh
-  copy: src=rkhunter_log_scanner.sh dest=/usr/share/rkhunter_log_scanner.sh mode=077
+- name: Transfer rkhunter_whitelister.sh
+  copy: src=rkhunter_whitelister.sh dest=/usr/share/rkhunter_whitelister.sh mode=077
   tags:
     - rkhunter
     - rkhunter-configuration
@@ -72,6 +69,18 @@
   tags:
     - rkhunter
     - rkhunter-configuration
+
+- name: Transfer rkhunter_log_scanner.sh
+  copy: src=rkhunter_log_scanner.sh dest=/usr/share/rkhunter_log_scanner.sh mode=077
+  tags:
+    - rkhunter
+    - rkhunter-configuration
+
+- name: Run whitelister script
+  script: /usr/share/rkhunter_whitelister.sh
+  tags:
+    - rkhunter
+    - rkhunter-whitelist
 
 - name: Ensure a scanner that runs every 30 minutes
   ansible.builtin.cron:

@@ -41,7 +41,7 @@
     - rkhunter
     - rkhunter-update
 
-- name: Specifying a path directly
+- name: Copy .dat from ansible host to local machine
   ansible.builtin.copy:
     src: /tmp/rkhunter/rkhunter.dat-{{ inventory_hostname }}
     dest: /var/lib/rkhunter/db/rkhunter.dat
