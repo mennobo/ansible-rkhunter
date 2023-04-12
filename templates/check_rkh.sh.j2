@@ -1,0 +1,12 @@
+#!/bin/bash
+
+rkhunter=$(/usr/bin/rkhunter --cronjob --report-warnings-only)
+
+rkhunter_count=$(echo $rkhunter |grep -vc '^$')
+
+if [ $rkhunter_count == '0' ]
+then
+  echo "No problems to report"
+else
+  echo $rkhunter
+fi
