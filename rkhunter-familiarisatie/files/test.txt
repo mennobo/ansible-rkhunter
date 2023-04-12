@@ -1,0 +1,9 @@
+[09:43:54] RootkitHunter Warning (see /var/log/rkhunter.log on host): The command '/usr/sbin/adduser' has been replaced by a script: /usr/sbin/adduser: Perl script text executable
+[09:44:03] RootkitHunter Warning (see /var/log/rkhunter.log on host): The command '/usr/bin/egrep' has been replaced by a script: /usr/bin/egrep: POSIX shell script, ASCII text executable
+[09:44:03] RootkitHunter Warning (see /var/log/rkhunter.log on host): The command '/usr/bin/fgrep' has been replaced by a script: /usr/bin/fgrep: POSIX shell script, ASCII text executable
+[09:44:06] RootkitHunter Warning (see /var/log/rkhunter.log on host): The command '/usr/bin/ldd' has been replaced by a script: /usr/bin/ldd: Bourne-Again shell script, ASCII text executable
+[09:44:16] RootkitHunter Warning (see /var/log/rkhunter.log on host): The command '/usr/bin/lwp-request' has been replaced by a script: /usr/bin/lwp-request: Perl script text executable
+[09:44:17] RootkitHunter Warning (see /var/log/rkhunter.log on host): The command '/usr/bin/which.debianutils' has been replaced by a script: /usr/bin/which.debianutils: POSIX shell script, ASCII text executable
+[09:45:54] RootkitHunter Warning (see /var/log/rkhunter.log on host): Suspicious file types found in /dev:/dev/shm/PostgreSQL.22807334; /dev/shm/PostgreSQL.1982163915; /dev/shm/PostgreSQL.386452611; /dev/shm/PostgreSQL.1943228913; /dev/shm/PostgreSQL.1778168712; 
+[09:45:55] RootkitHunter Warning (see /var/log/rkhunter.log on host): Hidden directory found: /etc/.java
+[09:45:55] RootkitHunter Warning (see /var/log/rkhunter.log on host): Hidden file found: /etc/.resolv.conf.systemd-resolved.bak: ASCII text

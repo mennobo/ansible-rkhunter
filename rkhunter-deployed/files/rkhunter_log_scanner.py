@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 log_list = list()
-with open('../../rkhunter.log', 'r')as f:
-# with open('/var/log/rkhunter.log', 'r')as f:
+# with open('../../rkhunter.log', 'r')as f:
+with open('/var/log/rkhunter.log', 'r')as f:
     for line in f:
         log_list.append(line)
 
