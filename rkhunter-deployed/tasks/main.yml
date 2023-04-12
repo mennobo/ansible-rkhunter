@@ -17,7 +17,6 @@
     owner: root
     group: root
     mode: 0644
-  notify: update rkhunter
   tags:
     - rkhunter
     - rkhunter-configuration

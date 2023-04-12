@@ -82,7 +82,7 @@
     - rkhunter
     - rkhunter-cronjob
 
-- name: Fetch remote .dat file
+- name: Fetch .dat file from remote and place in /tmp/rkhunter
   ansible.builtin.fetch:
     src: /var/lib/rkhunter/db/rkhunter.dat
     dest: /tmp/rkhunter/rkhunter.dat-{{ inventory_hostname }}
