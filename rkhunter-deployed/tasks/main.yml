@@ -46,17 +46,15 @@
     src: /tmp/rkhunter/rkhunter.dat-{{ inventory_hostname }}
     dest: /var/lib/rkhunter/db/rkhunter.dat
 
-- name: Transfer rkhunter_log_scanner.sh
-  copy: src=rkhunter_log_scanner.sh dest=/usr/share/rkhunter_log_scanner.sh mode=077
-  tags:
-    - rkhunter
-    - rkhunter-configuration
+- name: Copy script files
+  copy:
+    src: '{{item}}'
+    dest: '/usr/share/rkhunter'
+    mode: 077
+  loop:
+    - rkhunter_log_scanner.py
+    - rkhunter_log_scanner.sh
 
-- name: Transfer rkhunter_log_scanner.py
-  copy: src=rkhunter_log_scanner.py dest=/usr/share/rkhunter_log_scanner.py mode=077
-  tags:
-    - rkhunter
-    - rkhunter-configuration
 
 - name: Ensure a scanner that runs every 30 minutes
   ansible.builtin.cron:
